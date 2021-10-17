@@ -1,6 +1,5 @@
-use regex::Regex;
-use serde::de::Error;
-use serde::{Deserialize, Deserializer};
+use crate::amount_type::deserialize_amount;
+use serde::Deserialize;
 
 #[derive(Deserialize, PartialEq, Debug)]
 pub enum TransactionType {
@@ -25,34 +24,6 @@ pub struct Transaction {
     tx: u32,
     #[serde(deserialize_with = "deserialize_amount")]
     amount: i64,
-}
-
-fn deserialize_amount<'de, D>(deserializer: D) -> Result<i64, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    const PRECISION: usize = 4;
-
-    let amount_str = String::deserialize(deserializer)?;
-    let re = Regex::new(r"^(\d+)(?:\.{0,1})(\d{0,4})$").unwrap();
-
-    if let Some(capture) = re.captures_iter(&amount_str).next() {
-        let mut result = capture[1].parse::<i64>().map_err(D::Error::custom).unwrap()
-            * (10_i64.pow(PRECISION as u32)); //decimal
-        if !&capture[2].is_empty() {
-            let fractional_len = capture[2].len();
-            let fractional = capture[2].to_owned()
-                + &(0..PRECISION - fractional_len)
-                    .map(|_| "0")
-                    .collect::<String>();
-            result += fractional.parse::<i64>().map_err(D::Error::custom).unwrap();
-        }
-        return Ok(result);
-    }
-    Err(D::Error::custom(format!(
-        "Invalid amount format! {}",
-        amount_str
-    )))
 }
 
 #[cfg(test)]
