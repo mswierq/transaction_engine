@@ -1,4 +1,4 @@
-use crate::amount_type::deserialize_amount;
+use crate::amount_type::amount_serde;
 use serde::Deserialize;
 
 #[derive(Deserialize, PartialEq, Debug)]
@@ -22,7 +22,7 @@ pub struct Transaction {
     transaction_type: TransactionType,
     client: u16,
     tx: u32,
-    #[serde(deserialize_with = "deserialize_amount")]
+    #[serde(with = "amount_serde")]
     amount: i64,
 }
 

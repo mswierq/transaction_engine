@@ -38,9 +38,9 @@ impl std::fmt::Display for ResolveError {
 
 #[derive(Debug, PartialEq)]
 pub struct ClientAccount {
-    available: AmountType,
-    held: AmountType,
-    locked: bool,
+    pub available: AmountType,
+    pub held: AmountType,
+    pub locked: bool,
 }
 
 impl Default for ClientAccount {
