@@ -1,5 +1,6 @@
 use crate::amount_type::AmountType;
 use std::fmt::Formatter;
+use std::error::Error;
 
 type Result<T> = std::result::Result<(), T>;
 
@@ -11,6 +12,8 @@ impl std::fmt::Display for DepositError {
         write!(f, "Couldn't deposit due to maximum funds has been reached!")
     }
 }
+
+impl Error for DepositError {}
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct DisputeError;
@@ -24,6 +27,8 @@ impl std::fmt::Display for DisputeError {
     }
 }
 
+impl Error for DisputeError {}
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct ResolveError;
 
@@ -35,6 +40,8 @@ impl std::fmt::Display for ResolveError {
         )
     }
 }
+
+impl Error for ResolveError {}
 
 #[derive(Debug, PartialEq)]
 pub struct ClientAccount {

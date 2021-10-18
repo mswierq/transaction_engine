@@ -2,22 +2,22 @@ use crate::amount_type::{amount_serde, AmountType};
 use crate::client_account::ClientAccount;
 use csv::IntoInnerError;
 use csv::{Writer, WriterBuilder};
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use std::collections::HashMap;
 use std::io::Write;
 
 pub type AccountsBase = HashMap<u16, ClientAccount>;
 
-#[derive(Serialize)]
-struct AccountRecord {
-    client: u16,
+#[derive(Serialize, Deserialize)]
+pub struct AccountRecord {
+    pub client: u16,
     #[serde(with = "amount_serde")]
-    available: AmountType,
+    pub available: AmountType,
     #[serde(with = "amount_serde")]
-    held: AmountType,
+    pub held: AmountType,
     #[serde(with = "amount_serde")]
     total: AmountType,
-    locked: bool,
+    pub locked: bool,
 }
 
 pub fn serialize_accounts_base<W>(

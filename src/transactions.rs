@@ -19,11 +19,11 @@ pub enum TransactionType {
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Transaction {
     #[serde(rename = "type")]
-    transaction_type: TransactionType,
-    client: u16,
-    tx: u32,
+    pub transaction_type: TransactionType,
+    pub client: u16,
+    pub tx: u32,
     #[serde(with = "amount_serde")]
-    amount: i64,
+    pub amount: i64,
 }
 
 #[cfg(test)]
