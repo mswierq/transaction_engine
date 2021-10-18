@@ -2,7 +2,7 @@ use crate::amount_type::{amount_serde, AmountType};
 use crate::client_account::ClientAccount;
 use csv::IntoInnerError;
 use csv::{Writer, WriterBuilder};
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::io::Write;
 

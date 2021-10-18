@@ -1,6 +1,6 @@
 use crate::amount_type::AmountType;
-use std::fmt::Formatter;
 use std::error::Error;
+use std::fmt::Formatter;
 
 type Result<T> = std::result::Result<(), T>;
 

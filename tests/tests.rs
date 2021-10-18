@@ -1,9 +1,9 @@
 use csv::{ReaderBuilder, Trim};
 use rstest::rstest;
+use std::path::Path;
 use transaction_engine::accounts_base::{AccountRecord, AccountsBase};
 use transaction_engine::client_account::ClientAccount;
 use transaction_engine::TransactionEngine;
-use std::path::Path;
 
 fn read_expected_accounts(path: &Path) -> AccountsBase {
     let mut reader = ReaderBuilder::new()
@@ -31,10 +31,8 @@ fn read_expected_accounts(path: &Path) -> AccountsBase {
     "basic_deposit_and_withdrawal_tx.csv",
     "basic_deposit_and_withdrawal_accounts.csv"
 )]
-#[case(
-    "basic_withdrawals_tx.csv",
-    "basic_withdrawals_accounts.csv"
-)]
+#[case("basic_withdrawals_tx.csv", "basic_withdrawals_accounts.csv")]
+#[case("basic_dispute_tx.csv", "basic_dispute_accounts.csv")]
 fn test_transaction_engine(#[case] input: &str, #[case] expected: &str) {
     let transactions_path = Path::new(file!()).parent().unwrap().join(input);
     let expected_path = Path::new(file!()).parent().unwrap().join(expected);
