@@ -44,7 +44,6 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::io::BufWriter;
 
     #[test]
     fn test_serialize_accounts_base_single_record() {

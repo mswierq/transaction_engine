@@ -2,6 +2,7 @@
 /// The type is i64, the value represents a multiple of 0.0001.
 pub type AmountType = i64;
 
+#[warn(clippy::unnecessary_cast)]
 pub mod amount_serde {
     use super::AmountType;
     use regex::Regex;
@@ -9,6 +10,7 @@ pub mod amount_serde {
     use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
     const PRECISION: usize = 4;
+    #[allow(clippy::unnecessary_cast)]
     const WHOLE_NUMBER: AmountType = (10 as AmountType).pow(PRECISION as u32);
 
     /// Serializes the amount to string.

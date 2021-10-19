@@ -1,7 +1,7 @@
 use crate::amount_type::amount_serde;
 use serde::Deserialize;
 
-#[derive(Deserialize, PartialEq, Debug)]
+#[derive(Deserialize, PartialEq, Debug, Clone)]
 pub enum TransactionType {
     #[serde(rename = "deposit")]
     Deposit,
@@ -16,7 +16,7 @@ pub enum TransactionType {
 }
 
 //This struct represents a deserialized transaction record in a CSV file.
-#[derive(Deserialize, Debug, PartialEq)]
+#[derive(Deserialize, Debug, PartialEq, Clone)]
 pub struct Transaction {
     #[serde(rename = "type")]
     pub transaction_type: TransactionType,
