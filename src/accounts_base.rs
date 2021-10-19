@@ -6,8 +6,13 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::io::Write;
 
+/// Type alias of a HashMap that holds accounts of all clients.
+/// Taking into account that maximum number of clients is 2^16 and a single entry
+/// takes 16 bytes, so in the worst case scenario the whole map will take ~1.5-2.0 MB.
 pub type AccountsBase = HashMap<u16, ClientAccount>;
 
+
+/// This structure is used to deserialize and serialize the AccountsBase.
 #[derive(Serialize, Deserialize)]
 pub struct AccountRecord {
     pub client: u16,
@@ -20,6 +25,7 @@ pub struct AccountRecord {
     pub locked: bool,
 }
 
+/// Serializes the AccountBase
 pub fn serialize_accounts_base<W>(
     accounts: &AccountsBase,
     writer: W,

@@ -15,7 +15,7 @@ pub enum TransactionType {
     Chargeback,
 }
 
-//This struct represents a deserialized transaction record in a CSV file.
+/// This struct represents a deserialized transaction record in a CSV file.
 #[derive(Deserialize, Debug, PartialEq, Clone)]
 pub struct Transaction {
     #[serde(rename = "type")]
