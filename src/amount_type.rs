@@ -40,20 +40,21 @@ pub mod amount_serde {
         D: Deserializer<'de>,
     {
         let amount_str = String::deserialize(deserializer)?;
-        let re = Regex::new(r"^(\d+)(?:\.{0,1})(\d{0,4})$").unwrap();
+        let re = Regex::new(r"^(\-?)(\d+)(?:\.?)(\d{0,4})$").unwrap();
 
         if let Some(capture) = re.captures_iter(&amount_str).next() {
+            let sign: AmountType = if !capture[1].is_empty() { -1 } else { 1 };
             let mut result =
-                capture[1].parse::<AmountType>().map_err(D::Error::custom)? * WHOLE_NUMBER; //decimal
-            if !&capture[2].is_empty() {
-                let fractional_len = capture[2].len();
-                let fractional = capture[2].to_owned()
+                capture[2].parse::<AmountType>().map_err(D::Error::custom)? * WHOLE_NUMBER; //decimal
+            if !&capture[3].is_empty() {
+                let fractional_len = capture[3].len();
+                let fractional = capture[3].to_owned()
                     + &(0..PRECISION - fractional_len)
                         .map(|_| "0")
                         .collect::<String>();
                 result += fractional.parse::<AmountType>().map_err(D::Error::custom)?;
             }
-            return Ok(result);
+            return Ok(sign*result);
         }
         Err(D::Error::custom(format!(
             "Invalid amount format! {}",
@@ -106,6 +107,8 @@ mod tests {
     #[case("21.001", 210010)]
     #[case("1323.3434", 13233434)]
     #[case("233", 2330000)]
+    #[case("-233.01", -2330100)]
+    #[case("-233", -2330000)]
     fn test_deserialize_valid_amount(#[case] valid_amount: &str, #[case] expected: AmountType) {
         let data = r#"{"amount": ""#.to_owned() + valid_amount + r#""}"#;
         let result: Result<TestStruct, _> = serde_json::from_str(&data);

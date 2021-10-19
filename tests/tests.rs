@@ -38,7 +38,7 @@ fn read_expected_accounts(path: &Path) -> AccountsBase {
 #[case("drop_dispute_tx.csv", "drop_dispute_accounts.csv")]
 #[case("drop_resolve_tx.csv", "drop_resolve_accounts.csv")]
 #[case("drop_chargeback_tx.csv", "drop_chargeback_accounts.csv")]
-// #[case("debit_by_dispute_tx.csv", "debit_by_dispute_accounts.csv")]
+#[case("debit_by_dispute_tx.csv", "debit_by_dispute_accounts.csv")]
 #[case("duplicated_dispute_tx.csv", "duplicated_dispute_accounts.csv")]
 #[case("duplicated_dispute_then_chargeback_tx.csv", "duplicated_dispute_then_chargeback_accounts.csv")]
 #[case("duplicated_dispute_then_resolve_tx.csv", "duplicated_dispute_then_resolve_accounts.csv")]
