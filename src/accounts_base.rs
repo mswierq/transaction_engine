@@ -11,7 +11,6 @@ use std::io::Write;
 /// takes 16 bytes, so in the worst case scenario the whole map will take ~1.5-2.0 MB.
 pub type AccountsBase = HashMap<u16, ClientAccount>;
 
-
 /// This structure is used to deserialize and serialize the AccountsBase.
 #[derive(Serialize, Deserialize)]
 pub struct AccountRecord {
